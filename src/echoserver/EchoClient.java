@@ -39,8 +39,8 @@ public class EchoClient {
 		int byteRead;
 		try{
 			while((byteRead = System.in.read()) != -1){
-				socketOut.write(byteRead);
-				socketOut.flush();
+				socketOutputStream.write(byteRead);
+				socketOutputStream.flush();
 			}
 			socket.shutdownOutput();
 		} catch(IOException ioe){
@@ -52,7 +52,7 @@ public class EchoClient {
 	public static void readFromServer(){
 		int byteRead;
 		try{
-			while((byteRead = socketIn.read()) != -1){
+			while((byteRead = socketInputStream.read()) != -1){
 				System.out.write(byteRead);
 				System.out.flush();
 			}
