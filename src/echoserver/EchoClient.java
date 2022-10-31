@@ -12,12 +12,12 @@ public class EchoClient {
 	static OutputStream socketOutputStream;
 	static Socket socket;
 
-	public static void main(String[] args) throws IOException{
+	public static void main(String[] args) throws IOException, InterruptedException{
 		EchoClient client = new EchoClient();
 		client.start();
 	}
 
-	private void start() throws IOException {
+	private void start() throws IOException, InterruptedException{
 		try{
 		socket = new Socket("localhost", PORT_NUMBER);
 		socketInputStream = socket.getInputStream();
