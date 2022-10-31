@@ -8,24 +8,46 @@ import java.net.Socket;
 
 public class EchoServer {
 	
-	// REPLACE WITH PORT PROVIDED BY THE INSTRUCTOR
-	public static final int PORT_NUMBER = 0; 
+	public static final int PORT_NUMBER = 6013; 
 	public static void main(String[] args) throws IOException, InterruptedException {
 		EchoServer server = new EchoServer();
 		server.start();
 	}
 
 	private void start() throws IOException, InterruptedException {
+		try{
 		ServerSocket serverSocket = new ServerSocket(PORT_NUMBER);
 		while (true) {
 			Socket socket = serverSocket.accept();
+			new Thread(new ConnectionHandler(socket)).start();
+		}
+		} catch (IOException ioe){
+			System.err.println("An error occurred:");
+			ioe.printStackTrace();
+		}
+	}
+}
 
-			// Put your code here.
-			// This should do very little, essentially:
-			//   * Construct an instance of your runnable class
-			//   * Construct a Thread with your runnable
-			//      * Or use a thread pool
-			//   * Start that thread
+public static class ConnectionHandler implements Runnable{
+	private Socket connectionsocket;
+	public ConnectionHandler(Socket connectionsocket){
+		this.connectionsocket = connectionsocket;
+	}
+
+	@Override
+	public void run(){
+		try{
+			InputStream in = connectionsocket.getInputStream();
+			OutputStream out = connectionsocket.getOutputStream();
+			int byteRead;
+			while((byteRead = in.read()) != -1){
+				out.write(byteRead);
+				out.flush();
+			}
+			connectionsocket.shutdownOutput();
+		} catch (IOException e){
+			System.err.println("An error occurred:");
+			e.printStackTrace();
 		}
 	}
 }
