@@ -7,6 +7,10 @@ import java.net.Socket;
 
 public class EchoClient {
 	public static final int PORT_NUMBER = 6013;
+	
+	static InputStream socketInputStream;
+	static OutputStream socketOutputStream;
+	static Socket socket;
 
 	public static void main(String[] args) throws IOException{
 		EchoClient client = new EchoClient();
@@ -15,9 +19,9 @@ public class EchoClient {
 
 	private void start() throws IOException {
 		try{
-		Socket socket = new Socket("localhost", PORT_NUMBER);
-		InputStream socketInputStream = socket.getInputStream();
-		OutputStream socketOutputStream = socket.getOutputStream();
+		socket = new Socket("localhost", PORT_NUMBER);
+		socketInputStream = socket.getInputStream();
+		socketOutputStream = socket.getOutputStream();
 		
 		Thread firstThread = new Thread(EchoClient::readFromUser);
 		firstThread.start();
