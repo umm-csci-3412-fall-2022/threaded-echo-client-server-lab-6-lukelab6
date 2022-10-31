@@ -26,7 +26,6 @@ public class EchoServer {
 			ioe.printStackTrace();
 		}
 	}
-}
 
 public static class ConnectionHandler implements Runnable{
 	private Socket connectionsocket;
@@ -50,4 +49,5 @@ public static class ConnectionHandler implements Runnable{
 			e.printStackTrace();
 		}
 	}
+}
 }
